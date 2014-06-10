@@ -1,8 +1,11 @@
 import json
-import unittest
 import uuid
 
 import pilo
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest
 
 from sqlalchemy import MetaData, Table, Unicode, Text, TypeDecorator, Column, create_engine
 from sqlalchemy.dialects import postgresql
