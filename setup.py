@@ -31,9 +31,7 @@ setuptools.setup(
     author_email='spengler@gb.com',
     description='Mongo.',
     long_description=open('README.rst').read(),
-    files=[
-        'sqlalchemy_pilo.py'
-    ],
+    py_modules=['sqlalchemy_pilo'],
     include_package_data=True,
     extras_require=extras_require,
     tests_require=extras_require['tests'],
