@@ -1,5 +1,17 @@
 import re
 import setuptools
+from setuptools.command.test import test as TestCommand
+
+
+class PyTest(TestCommand):
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = ['tests.py']
+        self.test_suite = True
+    def run_tests(self):
+        import pytest
+        pytest.main(self.test_args)
 
 
 install_requires = [
@@ -9,11 +21,11 @@ install_requires = [
 
 extras_require = {
     'tests': [
-        'nose >=1.0,<2.0',
+        'pytest >=2.5.2,<3',
+        'pytest-cov >=1.7,<2',
         'mock >=1.0,<2.0',
         'unittest2 >=0.5.1,<0.6',
         'psycopg2 >=2.5,<3.0',
-        'coverage',
     ],
 }
 
@@ -36,7 +48,7 @@ setuptools.setup(
     extras_require=extras_require,
     tests_require=extras_require['tests'],
     install_requires=install_requires,
-    test_suite='nose.collector',
+    cmdclass={'test': PyTest},
     classifiers=[
         'Intended Audience :: Developers',
         'Development Status :: 4 - Beta',

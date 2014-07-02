@@ -1,13 +1,22 @@
 language: python
-addons:
-  postgresql: 9.3
 python:
-  - 2.6
-  - 2.7
+- 2.6
+- 2.7
 install:
-  - pip install -e .[tests]
+- pip install -e .[tests]
+- pip install coveralls
 before_script:
-  - psql -c "create user sqlalchemy_pilo with login password 'sqlalchemy_pilo';" -U postgres
-  - psql -c "create database sqlalchemy_pilo with owner sqlalchemy_pilo;" -U postgres
+- psql -c "create user sqlalchemy_pilo with login password 'sqlalchemy_pilo';" -U postgres
+- psql -c "create database sqlalchemy_pilo with owner sqlalchemy_pilo;" -U postgres
 script:
-  - nosetests
+- py.test tests.py --cov=sqlalchemy_pilo --cov-report term-missing
+after_success:
+- coveralls
+deploy:
+  provider: pypi
+  user: somepie
+  password:
+    secure: jis9sXfjYHu1dMaR/jXt9X00GbIoqkb8mHgNPomUllx7H0Mddp3KerD+ldy4Gzpv2lFpYe2OhgpVbHueb7BgUe6ps6I51mLmwlMQ4E9XJncxy9axKEejJzNNM3lKEIqpCAVIxwKuOXCkvnOeID3VvYBzOC1JXqaARC7VJfCCU5U=
+  on:
+    branch: master
+    tags: true
