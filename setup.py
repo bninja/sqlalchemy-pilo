@@ -15,7 +15,7 @@ class PyTest(TestCommand):
 
 
 install_requires = [
-    'pilo >=0.3.2,<0.4',
+    'pilo >=0.4,<0.5',
     'SQLAlchemy >=0.9,<0.10',
 ]
 
